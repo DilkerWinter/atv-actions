@@ -11,19 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout do código
-      uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-    - name: Configurar Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Configurar Docker (já vem no runner)
+        run: docker --version
 
-    - name: Instalar dependências
-      run: npm install
+      - name: Build da imagem
+        run: docker build -t node-api .
 
-    - name: Executar build
-      run: npm run start
+      - name: Rodar container
+        run: docker run -d --name node-api -p 3000:3000 node-api
 
-    - name: Sucesso
-      run: echo "Finalizado com sucesso!"
+      - name: Verificar logs do container
+        run: docker logs node-api
+
+      - name: Testar se está rodando
+        run: |
+          sleep 5
+          curl -f http://localhost:3000 || (echo "Container não respondeu" && exit 1)
+
+      - name: Sucesso
+        run: echo "Finalizado com sucesso!"
