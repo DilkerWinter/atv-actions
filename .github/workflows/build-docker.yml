@@ -23,7 +23,7 @@ jobs:
       run: npm install
 
     - name: Executar build
-      run: npm run build
+      run: npm run start
 
     - name: Sucesso
       run: echo "Finalizado com sucesso!"
