@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_EMAIL }}/atv-docker:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/atv-docker:latest
